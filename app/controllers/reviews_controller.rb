@@ -5,7 +5,6 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    binding.pry
     book = Book.find(params[:book_id])
     review = Review.new(review_params)
     if book
