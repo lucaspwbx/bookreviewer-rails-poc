@@ -15,10 +15,9 @@ var ReviewList = React.createClass({
   render: function() {
     var reviews = this.props.reviews.map(function(review, index) {
       return (
-        <Review description={review.description} name={review.name} />
+        <Review description={review.description} name={review.name} key={index} />
       );
     });
-
     return (
       <div>
         {reviews}
@@ -29,15 +28,28 @@ var ReviewList = React.createClass({
 
 var Book = React.createClass({
   render: function() {
-    return (
-      <div className='book'>
-        <h2>
-          Name: {this.props.name}
-          Pages: {this.props.pages}
-          Language: {this.props.language}
-        </h2>
-      </div>
-    );
+    if (this.props.reviews !== undefined) {
+      return (
+        <div className='book'>
+          <h2>
+            Name: {this.props.name}
+            Pages: {this.props.pages}
+            Language: {this.props.language}
+          </h2>
+          <ReviewList reviews={this.props.reviews} />
+        </div>
+      );
+    } else {
+      return (
+        <div className='book'>
+          <h2>
+            Name: {this.props.name}
+            Pages: {this.props.pages}
+            Language: {this.props.language}
+          </h2>
+        </div>
+      );
+    }
   }
 });
 
