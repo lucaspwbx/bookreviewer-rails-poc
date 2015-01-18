@@ -72,21 +72,28 @@ var BooksBox = React.createClass({
     this.loadBooks();
   },
   loadBooks: function() {
-    var books = [
-      { name: "Teste", pages: "10", language: "English" },
-      { name: "Dummies", pages: "90", language: "Deutsch" }
-    ];
-
-    this.setState({books: books});
+    //   var books = [
+    //{ name: "Teste", pages: "10", language: "English" },
+    //{ name: "Dummies", pages: "90", language: "Deutsch" }
+    //];
+    //this.setState({books: books});
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      success: function(books) {
+        this.setState({books: books});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
   },
   handleNewBook: function(book) {
-    console.log(book);
     var books = this.state.books;
     var newBooks = books.concat([book]);
     this.setState({books: newBooks});
   },
   render: function() {
-
     return (
       <div className='booksBox'>
         <BookForm onNewBook={this.handleNewBook}/>
@@ -97,8 +104,8 @@ var BooksBox = React.createClass({
 });
 
 var ready = function() {
-  React.renderComponent(
-    <BooksBox/>, document.getElementById('books')
+  React.render(
+    <BooksBox url='/books'/>, document.getElementById('books')
   );
 };
 
