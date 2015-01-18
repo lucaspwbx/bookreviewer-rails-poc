@@ -72,11 +72,6 @@ var BooksBox = React.createClass({
     this.loadBooks();
   },
   loadBooks: function() {
-    //   var books = [
-    //{ name: "Teste", pages: "10", language: "English" },
-    //{ name: "Dummies", pages: "90", language: "Deutsch" }
-    //];
-    //this.setState({books: books});
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -92,6 +87,18 @@ var BooksBox = React.createClass({
     var books = this.state.books;
     var newBooks = books.concat([book]);
     this.setState({books: newBooks});
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      type: 'POST',
+      data: {"book": book},
+      success: function(data) {
+        this.loadBooks();
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(xhr, status, err.toString());
+      }.bind(this)
+    });
   },
   render: function() {
     return (
