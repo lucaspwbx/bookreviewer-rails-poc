@@ -1,4 +1,32 @@
 /** @jsx React.DOM */
+var Review = React.createClass({
+  render: function() {
+    return (
+      <div className='review'>
+        <p>
+          {this.props.description} Name: {this.props.name}
+        </p>
+      </div>
+    );
+  }
+});
+
+var ReviewList = React.createClass({
+  render: function() {
+    var reviews = this.props.reviews.map(function(review, index) {
+      return (
+        <Review description={review.description} name={review.name} />
+      );
+    });
+
+    return (
+      <div>
+        {reviews}
+      </div>
+    );
+  }
+});
+
 var Book = React.createClass({
   render: function() {
     return (
@@ -16,7 +44,7 @@ var Book = React.createClass({
 var BookList = React.createClass({
   render: function() {
     var books = this.props.books.map(function(book, index) {
-      return (<Book name={book.name} pages={book.pages} language={book.language} key={index} />);
+      return (<Book name={book.name} pages={book.pages} language={book.language} reviews={book.reviews} key={index} />);
     });
 
     return (
