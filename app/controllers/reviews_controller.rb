@@ -29,7 +29,6 @@ class ReviewsController < ApplicationController
 
   def update
     book = Book.find(params[:book_id])
-    binding.pry
     review = book.reviews.find(params[:id])
     if review.update_attributes(review_params)
       render json: review, status: 200
